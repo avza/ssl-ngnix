@@ -1,0 +1,32 @@
+version: "3"
+
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: npm run start
+    ports:
+      - '5000:5000'
+    tty: true
+    networks:
+      - example-ssl
+
+  ngnix:
+    build:
+      context: .
+      dockerfile: ngnixdockerfile
+    ports:
+      - '80:80'
+      - '443:443'
+    tty: true
+    volumes: 
+      - /certs:/etc/nginx/certs
+    depends_on:
+      - api
+    networks:
+      - example-ssl
+
+networks:
+  example-ssl:
+    external: true
