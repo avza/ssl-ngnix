@@ -21,7 +21,7 @@ services:
       - '443:443'
     tty: true
     volumes: 
-      - /certs:/etc/nginx/certs
+      - ./certs:/etc/nginx/certs
     depends_on:
       - api
     networks:
