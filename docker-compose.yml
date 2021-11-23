@@ -21,11 +21,23 @@ services:
       - '443:443'
     tty: true
     volumes: 
-      - ./certs:/etc/nginx/certs
+      # - ./certbot/conf:/etc/letsencrypt
+      - ./certbot:/var/www/certbot
     depends_on:
       - api
+      # - certbot
     networks:
       - example-ssl
+
+  # certbot:
+  #   image: certbot/certbot:latest
+  #   # entrypoint: "/bin/sh -c 'certbot -d compcon.com.br -d api.compcon.com.br --email alissonvsouza8@gmail.com --agree-tos --manual --preferred-challenges dns certonly'"
+  #   volumes:
+  #     - ./certbot/conf:/etc/letsencrypt
+  #     - ./certbot/logs:/var/log/letsencrypt
+  #     - ./certbot/www:/var/www/certbot
+  #   networks:
+  #     - example-ssl
 
 networks:
   example-ssl:
